@@ -2,7 +2,7 @@ version: '3'
 services:
   db:
     ports:
-      - 3305:3305
+      - 3306:3306
     image: mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -13,6 +13,6 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports: 
-      - 8080:8080
+      - 80:80
     environment:
       - PMA_HOST=db

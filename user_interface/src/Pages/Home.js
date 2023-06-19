@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
+import {withLoginContext} from '../core/LoginContext'
+
 
 class Home extends Component {
     render() {
         return (
             <div>
-                hooooomeeee     
+                {this.props.login.value}     
             </div>
         );
     }
 }
 
-export default Home;
+export default withLoginContext(Home);
