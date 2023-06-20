@@ -1,21 +1,18 @@
 import React, { Component } from "react"
-import axios from "axios"
 import jscookie from "js-cookie"
-
 export const LoginContext = React.createContext()
 
 export class LoginProvider extends Component{
     
     state={
         isLoggedIn: false,
-        login: async(email,password) =>{
-            const resp =  await axios.post('/api/login', {email,password})
+        login: () =>{
             this.setState({
                 isLoggedIn: true
             })
         },
-        logout: async() =>{
-            jscookie.remove("kate-style-token")
+        logout: () =>{
+            
             this.setState({
                 isLoggedIn: false
             })
@@ -47,7 +44,7 @@ export function withLoginContext(Component){
         return(
             <LoginContext.Consumer>
                 {(value) =>
-                    <Component login = {value}  {...props}/>
+                    <Component auth = {value}  {...props}/>
                 }
             </LoginContext.Consumer>
         )

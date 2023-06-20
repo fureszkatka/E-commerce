@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Home from "./Pages/Home"
-import Menu from './core/Menu';
+import Menu from './core/Menu/Menu';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import { LoginProvider } from './core/LoginContext';
 import Signup from './Pages/Signup';
