@@ -19,9 +19,6 @@ export class LoginProvider extends Component{
             this.setState({
                 isLoggedIn: false
             })
-        },
-        signup: async(name,email,password)=>{
-            const resp = await axios.post('/api/signup', {name, email, password})
         }
     }
 

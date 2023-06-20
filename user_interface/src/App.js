@@ -3,6 +3,8 @@ import Home from "./Pages/Home"
 import Menu from './core/Menu';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import { LoginProvider } from './core/LoginContext';
+import Signup from './Pages/Signup';
+import Login from './Pages/Login';
 
 
 export class App extends Component {
@@ -13,7 +15,9 @@ export class App extends Component {
                     <LoginProvider>
                         <Menu></Menu>
                         <Routes>
-                            <Route index element={<Home />} />
+                            <Route path="/" index element={<Home />} />
+                            <Route path="/signup" element={<Signup/>}/>
+                            <Route path="/login" element={<Login/>}/>
                         </Routes>
                     </LoginProvider>
                 </BrowserRouter>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {withLoginContext} from './LoginContext'
+import {Link } from "react-router-dom"
 
 class Menu extends Component {
 
@@ -11,22 +12,18 @@ class Menu extends Component {
         this.props.login.logout()
     }
 
-    changesignup=()=>{
-        this.props.login.signup()
-    }
-
     render() {
         return (
-            <div>
-                <button>Dark mode</button>
+            <div className='Menu_container'>
+                <button className='Menu_theme'>Dark mode</button>
                 {
                     this.props.login.isLoggedIn ? 
-                        <button onClick={this.changelogout}>Signout</button>
-                        : 
-                        <>
-                        <button onClick={this.changesignup}>Signup</button>
-                        <button onClick={this.changelogin}>Signin</button>
-                        </>
+                        <button className='Menu_signout' onClick={this.changelogout}>Signout</button>
+                    : 
+                    <>
+                        <Link to ="/signup">Signup</Link>
+                        <Link onClick={this.changelogin}>Signin</Link>
+                    </>
                 }
                     
             </div>
