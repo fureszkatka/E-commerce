@@ -4,6 +4,7 @@ const bodyParser = require("body-parser")
 const cors = require("cors")
 const cookieParser = require("cookie-parser")
 const authRoutes = require("./roots/user")
+const itemsRoutes = require("./roots/items")
 
 const app = express()
 
@@ -13,6 +14,7 @@ app.use(bodyParser.json())
 app.use(morgan('dev'))
 
 app.use('/',authRoutes)
+app.use('/',itemsRoutes)
 
 
 app.listen(5000)

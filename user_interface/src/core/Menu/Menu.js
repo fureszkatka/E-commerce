@@ -32,6 +32,8 @@ class Menu extends Component {
     render() {
         return (
             <div style={this.state.color} className='Menu_container'>
+                <button>Kate style</button>
+
                 <button onClick={this.setTheme} className='Menu_theme'>Dark mode</button>
                 <div className='Menu_options-container'>
                     {

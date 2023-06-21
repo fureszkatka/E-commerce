@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Home from "../Pages/Home"
+import Home from "../Pages/Home/Home"
 import Menu from '../core/Menu/Menu';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import { LoginProvider } from '../core/LoginContext';
