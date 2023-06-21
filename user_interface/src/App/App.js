@@ -18,8 +18,8 @@ export class App extends Component {
                             <Menu></Menu>
                             <Routes>
                                 <Route path="/" index element={<Home />} />
-                                <Route path="/signup" element={<Signup/>}/>
-                                <Route path="/login" element={<Login/>}/>
+                                <Route path="/signup" element={<Signup/>} />
+                                <Route path="/login" element={<Login/>} />
                             </Routes>
                         </ThemeProvider>
                     </LoginProvider>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {withLoginContext} from '../LoginContext'
+import { withThemeContext } from '../ThemeContext'
 import {Link } from "react-router-dom"
 import jscookie from "js-cookie"
 import "./Menu.styl"
@@ -12,7 +13,7 @@ class Menu extends Component {
     }
 
     signout=()=>{
-        jscookie.remove("kate-style-token")
+        
         this.props.auth.logout()
     }
 
@@ -49,4 +50,4 @@ class Menu extends Component {
 }
 
 
-export default withLoginContext(Menu)
+export default withLoginContext(withThemeContext(Menu))

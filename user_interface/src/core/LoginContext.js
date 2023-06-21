@@ -1,18 +1,30 @@
 import React, { Component } from "react"
 import jscookie from "js-cookie"
 export const LoginContext = React.createContext()
+import axios from "axios"
+
+
 
 export class LoginProvider extends Component{
     
     state={
         isLoggedIn: false,
-        login: () =>{
+        login: async(email,password) =>{
+
+            const resp =  await axios.post('/api/login', {email,password})
+            
+            if(resp.error){
+                this.setState({
+                    isLoggedIn: false
+                })
+                return resp.error
+            }
             this.setState({
                 isLoggedIn: true
             })
         },
         logout: () =>{
-            
+            jscookie.remove("kate-style-token")
             this.setState({
                 isLoggedIn: false
             })

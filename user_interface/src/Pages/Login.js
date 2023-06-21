@@ -1,33 +1,26 @@
 import React, { Component } from 'react'
 import { withLoginContext } from '../core/LoginContext';
-import axios from "axios"
+import { withThemeContext } from '../core/ThemeContext';
 import { Navigate } from 'react-router';
 
 export class Login extends Component {
 
     state = {
-        email: "",
-        password: "",
+        email: "kati@gmail.com",
+        password: "kiki12",
         message: ""
     }
+    
 
     login = async() =>{
+        const {email,password} = this.state
 
-        const {email, password} = this.state
-
-        const resp =  await axios.post('/api/login', {email,password})
-        if(resp.error){
-            this.setState({
-                message: resp.error
-            })
-        }
-        if(resp.message){
-            this.setState({
-                message: resp.message
-            })
-            this.props.auth.login
-        }
+        const message = await this.props.auth.login(email,password)
+        this.setState({
+            message: message
+        })
     }
+    
 
     handleChange = (value) => (e) =>{
         this.setState({
@@ -52,4 +45,4 @@ export class Login extends Component {
     }
 }
 
-export default withLoginContext(Login);
+export default withLoginContext(withThemeContext(Login));
