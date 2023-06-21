@@ -28,7 +28,8 @@ export class LoginProvider extends Component{
             this.setState({
                 isLoggedIn: false
             })
-        }
+        },
+        isVisible: false
     }
 
     //Check if the jwt token is active for authentication

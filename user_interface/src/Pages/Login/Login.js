@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { withLoginContext } from '../core/LoginContext';
-import { withThemeContext } from '../core/ThemeContext';
+import { withLoginContext } from '../../core/LoginContext';
+import { withThemeContext } from '../../core/ThemeContext';
 import { Navigate } from 'react-router';
 
 export class Login extends Component {

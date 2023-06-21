@@ -5,7 +5,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import { LoginProvider } from '../core/LoginContext';
 import {ThemeProvider} from "../core/ThemeContext"
 import Signup from '../Pages/Signup';
-import Login from '../Pages/Login';
+import Login from '../Pages/Login/Login';
 
 
 export class App extends Component {
