@@ -33,3 +33,10 @@ exports.getItems = async(req,res) =>{
 
     return res.json({items:items})
 }
+
+exports.getItem = async(req,res)=>{
+    let product = await ShoppingItem.findOne({where:{
+        id: req.params.id
+    }})
+    res.send(product)
+}

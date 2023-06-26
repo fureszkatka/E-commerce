@@ -93,15 +93,17 @@ exports.signout = (req,res) =>{
 exports.requireSignin = jwt({
     secret: "fsdfjks-fol_H_IFL_FKESKÉRJOWPHRFIWEIFPWEFÁHIA",
     algorithms: ["HS256"],
-    getToken: (req) => req.cookies["burger-token"]
+    getToken: (req) => req.cookies["kate-style-token"]
 })
 
 //Make profile based on the root parameter 
-exports.userById = (req, res, next, id) => {
+exports.userById = async(req, res) => {
     
-    const user = Users.findOne({ where:{ id: id }})
+    const user = await Users.findOne({ where:{ id: req.auth._id }})
     if(user){
-        req.profile = user 
-        next()
+        return res.send(user) 
+    }
+    else{
+        res.send("no user")
     }
 }

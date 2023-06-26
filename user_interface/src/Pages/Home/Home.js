@@ -1,50 +1,38 @@
 import React, { Component } from 'react';
 import {withLoginContext} from '../../core/LoginContext'
 import { withThemeContext } from '../../core/ThemeContext';
+import { withCartContext } from '../../core/CartContext';
 import axios from 'axios';
 import "./Home.styl"
 import PopupLogin from '../PopupLogin/PopupLogin';
+import {compose} from "recompose"
+import { Link, Navigate } from 'react-router-dom';
+import { isAuthenticated } from '../../core/isAuthenticated';
+
+
 
 
 class Home extends Component {
 
     state = {
         items: [],
-        quantity: 0,
         cart: [],
     }
 
     componentDidMount = async() =>{
         const items = await axios.get("/api/getitems")
-       
+        
         this.setState({
             items: [...items.data.items]
         })
     }
 
-    decreseItem = (i) =>{
-        if(this.props.auth.isLoggedIn){
-            if(this.state.quantity < 0){
-                this.setState({
-                    quantity: this.state.quantity - 1
-                })
-            }
-        }
-    }
-    
-    increase = (i) =>{
-
-        if(this.props.auth.isLoggedIn){
-            this.setState({
-                quantity: this.state.quantity + 1
-            })
-        }
-    }
 
     render() {
         return (
             <div className='Home_container'>
-                {this.props.auth.isLoggedIn && <PopupLogin></PopupLogin>}
+                {this.props.auth.isLoggedIn && <Navigate to ={`/${this.props.auth.user.id}`}></Navigate>}
+                {this.props.cart.isShown && <PopupLogin></PopupLogin>}
                 <div className='Home_items'>
                     <>
                     {
@@ -52,23 +40,8 @@ class Home extends Component {
                             <div className='Home_item' key={index}>
                                 <img className='Home_image' src='https://st4.depositphotos.com/14009552/38450/v/450/depositphotos_384500344-stock-illustration-shopping-cart-logo-design-letter.jpg'></img>
                                 <div className='Home_item-info'>    
-                                    <div className='Home_name'>{item.name}</div>
-                                    <div className='Home_price'>{item.price}</div>
-                                </div>
-                                <div className='Home_quantity-container'>
-                                    <button 
-                                        min = "0"
-                                        className='Home_minus' 
-                                        onClick={this.decreseItem}>-
-                                    </button>
-                                    <div className='Home_quantity'>
-                                        {this.state.quantity}
-                                    </div>
-                                    <button 
-                                        max = "500"
-                                        onClick={this.increase}
-                                        className='Home_plus'>+
-                                    </button>
+                                    <Link to={`/logout/${item.id}`} className='Home_name'>{item.name}</Link >
+                                    <div className='Home_price'>{item.price}/{item.quantity}db</div>
                                 </div>
                             </div>
                         )
@@ -80,4 +53,8 @@ class Home extends Component {
     }
 }
 
-export default withLoginContext(withThemeContext(Home));
+export default compose(
+    withLoginContext,
+    withThemeContext,
+    withCartContext
+)(Home)

@@ -15,12 +15,8 @@ const ShoppingCart = sequelize.define('ShoppingCart', {
         autoIncrement: true,
         primaryKey: true
     },
-    name: {
+    itemid: {
         type: Sequelize.DataTypes.STRING,
-        allowNull: false
-    },
-    price: {
-        type: Sequelize.DataTypes.DECIMAL(10, 2),
         allowNull: false
     },
     quantity: {
@@ -29,4 +25,17 @@ const ShoppingCart = sequelize.define('ShoppingCart', {
     }
 });
 
-ShoppingItem.sync();
+ShoppingCart.sync()
+
+
+exports.getCart = async(req,res)=>{
+    
+    const cart = await ShoppingCart.findAll({where:{
+        id: req.userid
+    }})
+    console.log(cart)
+}
+
+exports.addToCart = (req,res)=>{
+    return "hex"
+}

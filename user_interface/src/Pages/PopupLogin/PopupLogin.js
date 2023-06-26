@@ -1,25 +1,24 @@
 import React, { Component } from 'react'
 import { withLoginContext } from '../../core/LoginContext'
 import { withThemeContext } from '../../core/ThemeContext'
-import {Navigate} from "react-router"
+import { withCartContext } from '../../core/CartContext'
+import { Navigate, Link } from "react-router-dom"
 import "./PopupLogin.styl"
+import {compose} from "recompose"
 
-export class PopupLogin extends Component {
+
+class PopupLogin extends Component {
 
     state = {
         email: "kati@gmail.com",
         password: "kiki12",
-        message: ""
+        message: "",
     }
     
 
-    login = async() =>{
-        const {email,password} = this.state
-
-        const message = await this.props.auth.login(email,password)
-        this.setState({
-            message: message
-        })
+    Popuplogin = async() =>{
+        console.log(this.props)
+        await this.props.auth.login(this.state.email,this.state.password)
     }
     
 
@@ -33,22 +32,31 @@ export class PopupLogin extends Component {
         const {email, password} = this.state
         return (
             <div className='PopupLogin_container'>
-                <div className='PopupLogin_background'>
-                    {this.props.auth.isLoggedIn && <Navigate to="/"/>}
-                    <div className='PopupLogin_inputs-container'>
-                        <input className='PopupLogin_email' value = {email} onChange={ this.handleChange("email") }/>
-                        <input className='PopupLogin_password' value = {password} onChange={ this.handleChange("password") }/>
-                    </div>
-                    <div className="PopupLogin_button-container">
-                        <button 
-                            onClick={this.Popuplogin} 
-                            className='PopupLogin_button'>Login
-                        </button>
-                    </div>
+                <div className='PopupLogin_close'>
+                    <div onClick={()=>this.props.auth.closePopup()} className='PopupLogin_close-button'>x</div>
                 </div>
+                <div className='PopupLogin_inputs-container'>
+                    <input className='PopupLogin_email' value = {email} onChange={ this.handleChange("email") }/>
+                    <input className='PopupLogin_password' value = {password} onChange={ this.handleChange("password") }/>
+                </div>
+                <div className="PopupLogin_button-container">
+                    <button 
+                        onClick={this.Popuplogin} 
+                        className='PopupLogin_button'>Login
+                    </button>
+                </div>
+                <p className='PopupLogin_signup'>If you don't have an account please make one here for shopping 
+                    <Link className='PopupLogin' to ="/signup"> Signup
+                    </Link>
+                </p>
+                
             </div>
         )
     }
 }
 
-export default withLoginContext(withThemeContext(PopupLogin))
+export default compose(
+    withLoginContext,
+    withThemeContext,
+    withCartContext
+)(PopupLogin)

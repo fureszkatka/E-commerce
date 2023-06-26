@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import { withLoginContext } from '../../core/LoginContext';
 import { withThemeContext } from '../../core/ThemeContext';
+import { withCartContext } from '../../core/CartContext';
 import { Navigate } from 'react-router';
+import {compose} from "recompose"
+
 
 export class Login extends Component {
 
@@ -15,10 +18,7 @@ export class Login extends Component {
     login = async() =>{
         const {email,password} = this.state
 
-        const message = await this.props.auth.login(email,password)
-        this.setState({
-            message: message
-        })
+        await this.props.auth.login(email,password)
     }
     
 
@@ -32,7 +32,7 @@ export class Login extends Component {
         const {email, password} = this.state
         return (
             <div className='Login_container'>
-                {this.props.auth.isLoggedIn && <Navigate to="/"/>}
+                {this.props.auth.isLoggedIn && <Navigate to={`/${this.props.auth.user.id}`}/>}
                 <div className='Login_inputs-container'>
                     <input value = {email} onChange={ this.handleChange("email") }/>
                     <input value = {password} onChange={ this.handleChange("password") }/>
@@ -45,4 +45,8 @@ export class Login extends Component {
     }
 }
 
-export default withLoginContext(withThemeContext(Login));
+export default compose(
+    withLoginContext,
+    withThemeContext,
+    withCartContext
+)(Login)
