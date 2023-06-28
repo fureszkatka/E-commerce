@@ -33,10 +33,10 @@ export class UserProduct extends Component {
         }
     }
 
-    addToCart = async() =>{
+    addToCart = async(itemname) =>{
 
         if(this.props.auth.isLoggedIn){
-           this.props.cart.addToCart(this.props.params.item, this.state.quantity)
+           this.props.cart.addToCart(this.props.params.product, this.props.params.user, this.state.quantity,itemname)
         }
         
         if(!this.props.auth.isLoggedIn){
@@ -45,9 +45,7 @@ export class UserProduct extends Component {
     }
 
     componentDidMount = async() =>{
-        if(this.props.auth.isLoggedIn){
-            const cart = await this.props.cart.getCart(this.props.params.user)
-        }
+        
         this.props.cart.getItem(this.props.params.product)
     }
   
@@ -79,7 +77,7 @@ export class UserProduct extends Component {
                             className='UserProduct_plus'>+
                         </button>
                         <button 
-                            onClick={this.addToCart}
+                            onClick={()=>this.addToCart(this.props.cart.item.name)}
                             className='UserProduct_add'>Add To Cart
                         </button>
                     </div>

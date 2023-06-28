@@ -6,10 +6,14 @@ export class CartProvider extends Component{
     
     state={
         quantity: false,
-        cart: {},
+        cart: [],
         item: {},
         getCart: async(userid) =>{
             const cart = await axios.get(`/api/getcart/${userid}`)
+            console.log(cart.data)
+            this.setState({
+                cart: [...cart.data]
+            })
         },
         getItem: async(id)=>{
 
@@ -18,22 +22,9 @@ export class CartProvider extends Component{
                 item: resp.data
             })
         },
-        addToCart: async(product,quantity) =>{
+        addToCart: async(productId,userId,quantity,itemname) =>{
             
-            if(!this.state.cart[product.id]){
-                this.setState({
-                    cart: {
-                        ...this.state.cart,
-                        [product.id]: quantity
-                    }
-                })
-            } else {
-                this.setState({
-                    cart: {...this.state.cart,
-                        [product.id]: this.state.cart[product.id] + quantity
-                    }
-                })
-            }
+            const product = await axios.post("/api/addtocart", {productId,userId,quantity,itemname})
             
             console.log(product)
         },

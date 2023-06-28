@@ -15,6 +15,10 @@ const ShoppingCart = sequelize.define('ShoppingCart', {
         autoIncrement: true,
         primaryKey: true
     },
+    name: {
+        type: Sequelize.DataTypes.TEXT,
+        allowNull: false
+    },
     itemid: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false
@@ -31,11 +35,29 @@ ShoppingCart.sync()
 exports.getCart = async(req,res)=>{
     
     const cart = await ShoppingCart.findAll({where:{
-        id: req.userid
+        userid: req.param("user")
     }})
-    console.log(cart)
+    if(cart){
+        console.log({Cart:cart}) 
+        res.send(cart)
+    }else{
+        return null
+    }
 }
 
-exports.addToCart = (req,res)=>{
-    return "hex"
+ShoppingCart.sync()
+
+
+exports.addToCart = async(req,res)=>{
+
+    console.log("requueeesttttttttt",req.body)
+
+    const item = await ShoppingCart.create({
+        userid: req.body.userId,
+        itemid: req.body.productId,
+        quantity: req.body.quantity,
+        name: req.body.itemname            
+    })
+
+    res.send(item)
 }

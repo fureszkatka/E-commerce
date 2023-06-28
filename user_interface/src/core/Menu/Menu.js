@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {withLoginContext} from '../LoginContext'
 import { withThemeContext } from '../ThemeContext'
+import {withCartContext} from '../CartContext'
 import {Link } from "react-router-dom"
 import "./Menu.styl"
 import {compose} from "recompose"
@@ -56,14 +57,14 @@ class Menu extends Component {
                     <Link className='Menu_kate_style' to = "/">Kate style</Link>
                     <input  className ="Menu_searchbar"value = {this.state.search} onChange={(e)=>this.change(e)}/>
                     <button className='Menu_search-button'>search</button>
-                    <div className='Menu_cart'>Cart</div>
+                    <Link to ={this.props.auth.isLoggedIn ? `/${this.props.auth.user.id}/cart` : '/login'} className='Menu_cart'>Cart</Link>
                 </div>
             </div>
         )
     }
 }
-
 export default compose(
     withLoginContext,
-    withThemeContext
+    withThemeContext,
+    withCartContext,
 )(Menu)

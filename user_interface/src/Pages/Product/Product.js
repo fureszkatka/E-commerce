@@ -15,7 +15,7 @@ export class Product extends Component {
     }
 
     decreseItem = () =>{
-        this.props.login.openPopup()
+        this.props.auth.openPopup()
     }
     
     increase=() =>{

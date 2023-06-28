@@ -7,7 +7,6 @@ import "./Home.styl"
 import PopupLogin from '../PopupLogin/PopupLogin';
 import {compose} from "recompose"
 import { Link, Navigate } from 'react-router-dom';
-import { isAuthenticated } from '../../core/isAuthenticated';
 
 
 
