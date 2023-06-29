@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser")
 const authRoutes = require("./roots/user")
 const itemsRoutes = require("./roots/items")
 const cartRoutes = require("./roots/cart")
+const orderRoutes = require("./roots/order")
 
 const app = express()
 
@@ -17,6 +18,7 @@ app.use(morgan('dev'))
 app.use('/', authRoutes)
 app.use('/', itemsRoutes)
 app.use('/', cartRoutes)
+app.use('/', orderRoutes)
 
 
 app.listen(5000)

@@ -4,6 +4,6 @@ const {login,signup,requireSignin,userById}= require("../controllers/user")
 
 router.post("/api/signup", signup)
 router.post("/api/login", login)
-router.get("/api/getuser",requireSignin, userById)
+router.get("/api/getuser", requireSignin, userById)
 
 module.exports = router

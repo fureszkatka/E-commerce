@@ -5,7 +5,9 @@ const sequelize = new Sequelize('kate_style', 'root', 'root', {
     dialect: 'mysql'
 });
 
-const ShoppingCart = sequelize.define('ShoppingCart', {
+module.exports = {}
+
+ShoppingCart = sequelize.define('ShoppingCart', {
     userid: {
         type: Sequelize.DataTypes.INTEGER,
         allowNull: false
@@ -29,10 +31,12 @@ const ShoppingCart = sequelize.define('ShoppingCart', {
     }
 });
 
+module.exports.ShoppingCart = ShoppingCart
+
 ShoppingCart.sync()
 
 
-exports.getCart = async(req,res)=>{
+module.exports.getCart = async(req,res)=>{
     
     const cart = await ShoppingCart.findAll({where:{
         userid: req.param("user")
@@ -48,7 +52,7 @@ exports.getCart = async(req,res)=>{
 ShoppingCart.sync()
 
 
-exports.addToCart = async(req,res)=>{
+module.exports.addToCart = async(req,res)=>{
 
     console.log("requueeesttttttttt",req.body)
 
