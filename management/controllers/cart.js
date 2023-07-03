@@ -5,9 +5,7 @@ const sequelize = new Sequelize('kate_style', 'root', 'root', {
     dialect: 'mysql'
 });
 
-module.exports = {}
-
-ShoppingCart = sequelize.define('ShoppingCart', {
+const ShoppingCart = sequelize.define('ShoppingCart', {
     userid: {
         type: Sequelize.DataTypes.INTEGER,
         allowNull: false
@@ -31,12 +29,11 @@ ShoppingCart = sequelize.define('ShoppingCart', {
     }
 });
 
-module.exports.ShoppingCart = ShoppingCart
 
 ShoppingCart.sync()
 
 
-module.exports.getCart = async(req,res)=>{
+exports.getCart = async(req,res)=>{
     
     const cart = await ShoppingCart.findAll({where:{
         userid: req.param("user")
@@ -45,14 +42,14 @@ module.exports.getCart = async(req,res)=>{
         console.log({Cart:cart}) 
         res.send(cart)
     }else{
-        return null
+        return "null"
     }
 }
 
 ShoppingCart.sync()
 
 
-module.exports.addToCart = async(req,res)=>{
+exports.addToCart = async(req,res)=>{
 
     console.log("requueeesttttttttt",req.body)
 
@@ -64,4 +61,15 @@ module.exports.addToCart = async(req,res)=>{
     })
 
     res.send(item)
+}
+
+
+exports.removeFromCart = async(req,res) =>{
+    const deletedItem = await ShoppingCart.destroy({
+        where: { 
+            userid: req.param("user"), 
+            id: req.param("item")            
+        },
+    });
+    res.send("Delete success!")
 }

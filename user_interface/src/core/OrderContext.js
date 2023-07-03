@@ -12,7 +12,8 @@ export class OrderProvider extends Component{
         getOrder: async(userId)=>{
             
             const order = await axios.get(`/api/${userId}/getorder`)
-        }
+        },
+        
     }
 
 

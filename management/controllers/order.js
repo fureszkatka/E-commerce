@@ -1,5 +1,4 @@
 const Sequelize = require("sequelize")
-const {ShoppingCart} = require("./cart")
 
 
 //Setup connection with database
@@ -9,59 +8,38 @@ const sequelize = new Sequelize('kate_style', 'root', 'root', {
 });
 
 //Define table and rows for databases
-const Order = sequelize.define('Order', {
+const Orders = sequelize.define('Orders', {
    
     userId: {
-        type: Sequelize.DataTypes.NUMBER,
+        type: Sequelize.DataTypes.INTEGER,
         allowNull: false
     },
     itemId: {
-        type: Sequelize.DataTypes.NUMBER,
+        type: Sequelize.DataTypes.INTEGER,
         allowNull: false
     },
     itemName: {
         type: Sequelize.DataTypes.STRING,
-        allowNull: false
     },
     quantity: {
-        type: Sequelize.DataTypes.NUMBER,
-        allowNull: false
+        type: Sequelize.DataTypes.INTEGER,
     }
     
 }, {
-    tableName: "Order",modelName:"Order"
+    tableName: "Orders",modelName:"Orders"
 });
 
-Order.sync();
+Orders.sync();
 
 exports.addOrder = async(req,res)=>{
 
-    let orders = []
-
-    while(req.body.order.length < i){
-        let cart = await ShoppingCart.findAll({where:{
-            id: order.id
-        }})
-        orders.push(cart)
-        console.log(orders)
-    }
-
-
-    if(req.body.order){
-        i = 0
-            
-            const item = await Order.create({
-                userId: req.body.userId,
-                itemid: req.body.productId,
-                quantity: req.body.quantity,
-                name: req.body.itemname            
-            })
-            i++
-    }
+    let order = []
+    console.log(req.body.order)
+    
 }
 
 exports.getOrder = async(req,res)=>{
 
-    const order = await Order.findAll()
+    const order = await Orders.findAll()
     res.send(order)
 }

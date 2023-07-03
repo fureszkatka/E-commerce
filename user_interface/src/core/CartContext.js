@@ -28,16 +28,9 @@ export class CartProvider extends Component{
             
             console.log(product)
         },
-        removeFromCart:(product)=>{
-            return "töröl"
-        },
-        getQuantityOfProduct:(product) =>{
-            
-            if(!this.state.cart[product.id]){
-                return 0
-            }else{
-                return this.state.cart[product.id]
-            }
+        deleteItem: async(userId,product)=>{
+            const delorder = await axios.delete(`/api/delete/${userId}/${product}`)
+            console.log(delorder.data)
         },
         setProductQuantity:(product,value) =>{
 
