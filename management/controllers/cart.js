@@ -39,7 +39,6 @@ exports.getCart = async(req,res)=>{
         userid: req.param("user")
     }})
     if(cart){
-        console.log({Cart:cart}) 
         res.send(cart)
     }else{
         return "null"
@@ -50,8 +49,6 @@ ShoppingCart.sync()
 
 
 exports.addToCart = async(req,res)=>{
-
-    console.log("requueeesttttttttt",req.body)
 
     const item = await ShoppingCart.create({
         userid: req.body.userId,

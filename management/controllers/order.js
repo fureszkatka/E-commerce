@@ -33,13 +33,26 @@ Orders.sync();
 
 exports.addOrder = async(req,res)=>{
 
-    let order = []
-    console.log(req.body.order)
-    
+
+
+    for(i = 0;i < req.body.orders.length; i++){
+        let order = await Orders.create({
+            userId: req.param("user"),
+            itemId: req.body.orders[i].item,
+            itemName: req.body.orders[i].itemName,
+            quantity: req.body.orders[i].itemQuantity
+        })
+    }
+    res.send("upload success")
 }
+
+Orders.sync();
+
 
 exports.getOrder = async(req,res)=>{
 
-    const order = await Orders.findAll()
+    const order = await Orders.findAll({where:{
+        userId: req.param("user")
+    }})
     res.send(order)
 }

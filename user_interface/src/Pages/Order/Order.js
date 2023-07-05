@@ -14,14 +14,17 @@ class Order extends Component {
 
     componentDidMount = async () => {
         let order = await this.props.order.getOrder(this.props.params.user)
-        console.log(this.props.order.order)
     }
 
     render() {
         return (
             <div className='Order_container'>
                 {!this.props.auth.isLoggedin && <Navigate to ="/login"></Navigate> }
-
+                {this.props.order.order.map((order,index) =>(
+                    <div key={index}>
+                        {order.id}
+                    </div>
+                ))}
             </div>
         )
     }

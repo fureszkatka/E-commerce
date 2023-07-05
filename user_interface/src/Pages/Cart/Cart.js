@@ -29,10 +29,7 @@ class Cart extends Component {
     };
 
     addOrder = async() =>{
-        let order = await this.props.order.addOrder()
-
-        console.log("checked :",this.state.checked);
-        
+        let order = await this.props.order.addOrder(this.props.params.user, this.state.checked)
     }
 
     deleteCartitem = async(id) =>{
@@ -51,33 +48,34 @@ class Cart extends Component {
         return (
             <div className='Cart_content'>
                 <div className='Cart_background'>
+                {this.props.order.uploaded && <Navigate to ={`/${this.props.params.user}/order`}></Navigate>}
                 {!this.props.auth.isLoggedIn && <Navigate to ={"/login"}></Navigate>}
                 {this.props.cart.cart.map((item,index) => 
                     <div className='Cart_container' key = {index}>
                         
-                            <div className='Cart_desc'>
-                                <div className='Cart_name'>{item.name}</div>
-                            </div>
-                            <div className='Cart_quantity'>quantity: {item.quantity}</div>
-
-                            <span 
-                                className="material-symbols-outlined" 
-                                onClick={()=>this.deleteConfirmed(item.id)}
-                            >
-                                delete
-                            </span>
-                            <Checkbox 
-                                className='Cart_checkbox'
-                                onChange={this.onChange} 
-                                value={{
-                                    item: item.itemid, 
-                                    itemName: item.name,
-                                    itemQuantity: item.quantity
-                                }}>
-                                item Id: 
-                                    {item.itemid}
-                            </Checkbox>
+                        <div className='Cart_desc'>
+                            <div className='Cart_name'>{item.name}</div>
                         </div>
+                        <div className='Cart_quantity'>{item.quantity}db</div>
+
+                        <span 
+                            className="material-symbols-outlined" 
+                            onClick={()=>this.deleteConfirmed(item.id)}
+                        >
+                            delete
+                        </span>
+                        <Checkbox 
+                            className='Cart_checkbox'
+                            onChange={this.onChange} 
+                            value={{
+                                item: item.itemid, 
+                                itemName: item.name,
+                                itemQuantity: item.quantity
+                            }}>
+                            Id: 
+                                {item.itemid}
+                        </Checkbox>
+                    </div>
                 )}
                 <button className='Cart_checkout' onClick={this.addOrder}>Checkout</button>
                 </div>

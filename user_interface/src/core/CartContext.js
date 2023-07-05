@@ -23,7 +23,6 @@ export class CartProvider extends Component{
             })
         },
         addToCart: async(productId,userId,quantity,itemname) =>{
-            
             const product = await axios.post("/api/addtocart", {productId,userId,quantity,itemname})
             
             console.log(product)
@@ -31,9 +30,6 @@ export class CartProvider extends Component{
         deleteItem: async(userId,product)=>{
             const delorder = await axios.delete(`/api/delete/${userId}/${product}`)
             console.log(delorder.data)
-        },
-        setProductQuantity:(product,value) =>{
-
         },
     }
 

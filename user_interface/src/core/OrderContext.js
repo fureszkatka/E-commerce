@@ -6,12 +6,19 @@ export class OrderProvider extends Component{
     
     state={
         order: [],
+        uploaded: false,
         addOrder: async(userId,order)=>{
-            const orders = await axios.post(`/api/${userId}/addorder`, order)
+            const orders = await axios.post(`/api/${userId}/addorder`,{orders:order})
+            this.setState({
+                uploaded: true
+            })            
         },
         getOrder: async(userId)=>{
             
             const order = await axios.get(`/api/${userId}/getorder`)
+            this.setState({
+                order:[...order.data] 
+            })
         },
         
     }
