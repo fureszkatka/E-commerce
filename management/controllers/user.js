@@ -33,12 +33,8 @@ Users.sync();
 
 //Signup user
 exports.signup = async(req,res) =>{
- 
-    if(res.error){
-        res.status(400).json({error: res.error })
-    }
-    else{
 
+    try{
         const userExists = await Users.findOne({ where: { email: req.body.email } })
         if(userExists){
             return res.status(403).json({
@@ -56,7 +52,9 @@ exports.signup = async(req,res) =>{
                 message: "Signup success!"
             })
         }
-    }
+    }catch(error) {
+        console.error('Error updating row:', error);
+    };
     
 }
 
@@ -72,21 +70,29 @@ exports.login = async (req, res) => {
         })
     }
     else {
+        try{
         //define token
-        const token = ejwt.sign({ _id: userMatch.id }, "fsdfjks-fol_H_IFL_FKESKÉRJOWPHRFIWEIFPWEFÁHIA")
+            const token = ejwt.sign({ _id: userMatch.id }, "fsdfjks-fol_H_IFL_FKESKÉRJOWPHRFIWEIFPWEFÁHIA")
 
-        res.cookie("kate-style-token", token, { expire: new Date() + 9999 })
-        const { id, name, email } = userMatch
-        console.log("usermatchhhh --->>",userMatch)
-        return res.json({ token, user: { id, email, name } })
+            res.cookie("kate-style-token", token, { expire: new Date() + 9999 })
+            const { id, name, email } = userMatch
+            console.log("usermatchhhh --->>",userMatch)
+            return res.json({ token, user: { id, email, name } })
+        }catch(error) {
+            console.error('Error updating row:', error);
+        };
     }  
 
 }
 
 //Signout user
 exports.signout = (req,res) =>{
-    res.clearCookie("kate-style-token")
-    return res.json({message: "signout"})
+    try{
+        res.clearCookie("kate-style-token")
+        return res.json({message: "signout"})
+    }catch(error) {
+        console.error('Error updating row:', error);
+    };
 }
 
 //Check jwt token

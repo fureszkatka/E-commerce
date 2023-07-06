@@ -34,6 +34,7 @@ class Cart extends Component {
 
     deleteCartitem = async(id) =>{
         let delorder= await this.props.cart.deleteItem(this.props.params.user, id)
+        location.reload();
     }
 
     deleteConfirmed = (id) =>{
@@ -44,6 +45,7 @@ class Cart extends Component {
         }
     }
 
+
     render() {
         return (
             <div className='Cart_content'>
@@ -51,13 +53,14 @@ class Cart extends Component {
                 {this.props.order.uploaded && <Navigate to ={`/${this.props.params.user}/order`}></Navigate>}
                 {!this.props.auth.isLoggedIn && <Navigate to ={"/login"}></Navigate>}
                 {this.props.cart.cart.map((item,index) => 
-                    <div className='Cart_container' key = {index}>
+                    <form className='Cart_container' key = {index}>
                         
                         <div className='Cart_desc'>
                             <div className='Cart_name'>{item.name}</div>
                         </div>
+                        <button onClick={()=>this.props.cart.setQuantityMinus(this.props.params.user,item.id,item.quantity)}>-</button>
                         <div className='Cart_quantity'>{item.quantity}db</div>
-
+                        <button onClick={()=>this.props.cart.setQuantityPlus(this.props.params.user,item.id,item.quantity)}>+</button>
                         <span 
                             className="material-symbols-outlined" 
                             onClick={()=>this.deleteConfirmed(item.id)}
@@ -75,7 +78,7 @@ class Cart extends Component {
                             Id: 
                                 {item.itemid}
                         </Checkbox>
-                    </div>
+                    </form>
                 )}
                 <button className='Cart_checkout' onClick={this.addOrder}>Checkout</button>
                 </div>

@@ -34,15 +34,14 @@ ShoppingCart.sync()
 
 
 exports.getCart = async(req,res)=>{
-    
-    const cart = await ShoppingCart.findAll({where:{
-        userid: req.param("user")
-    }})
-    if(cart){
+    try{
+        const cart = await ShoppingCart.findAll({where:{
+            userid: req.param("user")
+        }})
         res.send(cart)
-    }else{
-        return "null"
-    }
+    }catch(error) {
+        console.error('Error updating row:', error);
+    };
 }
 
 ShoppingCart.sync()
@@ -50,23 +49,67 @@ ShoppingCart.sync()
 
 exports.addToCart = async(req,res)=>{
 
-    const item = await ShoppingCart.create({
-        userid: req.body.userId,
-        itemid: req.body.productId,
-        quantity: req.body.quantity,
-        name: req.body.itemname            
-    })
-
-    res.send(item)
+    try{
+        const alredyIn = await ShoppingCart.findAll({
+            where:{
+                userid: req.body.userId,
+                itemid: req.body.productId
+            }
+        })
+        if(alredyIn){
+            let item = await ShoppingCart.update(
+                {quantity: alredyIn.quantity + req.body.quantity},
+                {where:{
+                    userid: req.body.userId,
+                    itemid: req.body.productId
+                }}
+            )
+            res.send(item)
+        }else{
+            let item = await ShoppingCart.create({
+                userid: req.body.userId,
+                itemid: req.body.productId,
+                quantity: req.body.quantity,
+                name: req.body.itemname            
+            })
+            res.send(item)
+        }
+    }catch(error) {
+        console.error('Error updating row:', error);
+    };   
 }
 
 
 exports.removeFromCart = async(req,res) =>{
-    const deletedItem = await ShoppingCart.destroy({
-        where: { 
-            userid: req.param("user"), 
-            id: req.param("item")            
-        },
-    });
-    res.send("Delete success!")
+    
+    try {
+        const deletedItem = await ShoppingCart.destroy({
+            where: { 
+                userid: req.param("user"), 
+                id: req.param("item")            
+            },
+        });
+        res.send("Delete success!")
+    
+    }catch(error) {
+        console.error('Error updating row:', error);
+    };
+} 
+exports.setQuantity = async(req,res)=>{
+    
+    console.log(req.body.quantity)
+
+    try {
+        const setQuan = await ShoppingCart.update(
+            
+            {quantity: req.body.quantity},
+            {where:{
+                userid: req.param("user"),
+                id: req.body.cartid
+            }}
+        )
+        res.send({quantity:req.body.quantity})
+    } catch(error) {
+        console.error('Error updating row:', error);
+    };
 }

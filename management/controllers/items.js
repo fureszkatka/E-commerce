@@ -29,14 +29,23 @@ const ShoppingItem = sequelize.define('ShoppingItem', {
 ShoppingItem.sync();
 
 exports.getItems = async(req,res) =>{
-    let items = await ShoppingItem.findAll()
+    try{
+        let items = await ShoppingItem.findAll()
 
-    return res.json({items:items})
+        return res.json({items:items})
+    }catch(error) {
+        console.error('Error updating row:', error);
+    };
 }
 
 exports.getItem = async(req,res)=>{
-    let product = await ShoppingItem.findOne({where:{
-        id: req.params.id
-    }})
-    res.send(product)
+
+    try{
+        let product = await ShoppingItem.findOne({where:{
+            id: req.param("item")
+        }})
+        res.send(product)
+    }catch(error) {
+        console.error('Error updating row:', error);
+    };
 }

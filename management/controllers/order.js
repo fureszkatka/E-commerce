@@ -20,10 +20,16 @@ const Orders = sequelize.define('Orders', {
     },
     itemName: {
         type: Sequelize.DataTypes.STRING,
+        allowNull: false
     },
     quantity: {
         type: Sequelize.DataTypes.INTEGER,
-    }
+        allowNull: false
+    },
+    isOrdered: {
+        type: Sequelize.DataTypes.BOOLEAN,
+        defaultValue: false
+    }   
     
 }, {
     tableName: "Orders",modelName:"Orders"
@@ -32,18 +38,19 @@ const Orders = sequelize.define('Orders', {
 Orders.sync();
 
 exports.addOrder = async(req,res)=>{
-
-
-
-    for(i = 0;i < req.body.orders.length; i++){
-        let order = await Orders.create({
-            userId: req.param("user"),
-            itemId: req.body.orders[i].item,
-            itemName: req.body.orders[i].itemName,
-            quantity: req.body.orders[i].itemQuantity
-        })
-    }
-    res.send("upload success")
+    try{
+        for(i = 0;i < req.body.orders.length; i++){
+            let order = await Orders.create({
+                userId: req.param("user"),
+                itemId: req.body.orders[i].item,
+                itemName: req.body.orders[i].itemName,
+                quantity: req.body.orders[i].itemQuantity
+            })
+        }
+        res.send(cart)
+    }catch(error) {
+        console.error('Error updating row:', error);
+    };
 }
 
 Orders.sync();
