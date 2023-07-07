@@ -35,7 +35,7 @@ export class App extends Component {
                                         <Route path="/logout/:item" element={<Product/>} />
                                         <Route path="/:user/:product" element={<UserProduct/>} />
                                         <Route path="/:user/cart" element={<Cart/>} />
-                                        <Route path="/:user/order" element={<Order/>} />
+                                        <Route path="/order/:user" element={<Order/>} />
                                     </Routes>
                                 </OrderProvider>
                             </CartProvider>

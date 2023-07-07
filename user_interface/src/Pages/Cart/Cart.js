@@ -3,7 +3,7 @@ import {compose} from "recompose"
 import {withLoginContext} from '../../core/LoginContext'
 import { withThemeContext } from '../../core/ThemeContext';
 import { withCartContext } from '../../core/CartContext';
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate, useParams, Link } from 'react-router-dom';
 import "./Cart.styl"
 import { Checkbox, Col, Row } from 'antd';
 import { withOrderContext } from '../../core/OrderContext';
@@ -80,9 +80,10 @@ class Cart extends Component {
                         </Checkbox>
                     </form>
                 )}
-                <button className='Cart_checkout' onClick={this.addOrder}>Checkout</button>
+                <button className='Cart_checkout' onClick={this.addOrder}>Checkout</button> 
+                <Link to={`/order/${this.props.params.user}`}>Check order</Link>
                 </div>
-                
+               
             </div>
         )
     }

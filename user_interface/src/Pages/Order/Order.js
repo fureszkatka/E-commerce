@@ -19,12 +19,8 @@ class Order extends Component {
     render() {
         return (
             <div className='Order_container'>
-                {!this.props.auth.isLoggedin && <Navigate to ="/login"></Navigate> }
-                {this.props.order.order.map((order,index) =>(
-                    <div key={index}>
-                        {order.id}
-                    </div>
-                ))}
+               
+                <button onClick={()=>this.props.order.checkout(this.props.params.user,this.state.orders)}>Pay</button>
             </div>
         )
     }

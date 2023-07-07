@@ -20,7 +20,9 @@ export class OrderProvider extends Component{
                 order:[...order.data] 
             })
         },
-        
+        checkout: async(userId,order)=>{
+            const checkout = await axios.put(`/api/${userId}/checkout`,order)
+        }
     }
 
 

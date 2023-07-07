@@ -63,3 +63,16 @@ exports.getOrder = async(req,res)=>{
     }})
     res.send(order)
 }
+
+exports.checkout = async(req,res)=>{
+
+    for(i=0;req.body.order.length;i++){
+        const checkout = await Orders.update(
+
+            {isOrdered: true},
+            {where:{
+                id: req.body.order.id
+            }}
+        )
+    }
+}
