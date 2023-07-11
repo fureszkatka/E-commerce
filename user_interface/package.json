@@ -6,6 +6,7 @@
   "author": "manjaro-kati <fureszkatka@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@ant-design/icons": "^5.1.4",
     "@babel/core": "^7.22.5",
     "@babel/preset-env": "^7.22.5",
     "@babel/preset-react": "^7.22.5",

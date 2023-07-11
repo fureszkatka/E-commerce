@@ -17,8 +17,6 @@ export class CartProvider extends Component{
             })
         },
         getItem: async(id)=>{
-
-            
             const resp = await axios.get(`/api/getitem/${id}`)
             console.log(resp.data)
             this.setState({

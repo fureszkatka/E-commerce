@@ -7,21 +7,25 @@ export class OrderProvider extends Component{
     state={
         order: [],
         uploaded: false,
+        isOrdered: false,
         addOrder: async(userId,order)=>{
             const orders = await axios.post(`/api/${userId}/addorder`,{orders:order})
-            this.setState({
-                uploaded: true
-            })            
+            if(orders.data){
+                this.setState({
+                    isOrdered: true
+                })
+            }
         },
         getOrder: async(userId)=>{
             
             const order = await axios.get(`/api/${userId}/getorder`)
+            console.log(order.data)
             this.setState({
-                order:[...order.data] 
+                order: [...order.data] 
             })
         },
-        checkout: async(userId,order)=>{
-            const checkout = await axios.put(`/api/${userId}/checkout`,order)
+        checkout: async(userId)=>{
+            const checkout = await axios.put(`/api/${userId}/checkout`, {order: [...this.state.order]})
         }
     }
 

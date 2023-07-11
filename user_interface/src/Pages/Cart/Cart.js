@@ -49,12 +49,12 @@ class Cart extends Component {
     render() {
         return (
             <div className='Cart_content'>
-                <div className='Cart_background'>
-                {this.props.order.uploaded && <Navigate to ={`/${this.props.params.user}/order`}></Navigate>}
+                <form className='Cart_background'>
+                {this.props.order.isOrdered && <Navigate to ={`/${this.props.params.user}/order`}></Navigate>}
                 {!this.props.auth.isLoggedIn && <Navigate to ={"/login"}></Navigate>}
                 {this.props.cart.cart.map((item,index) => 
                     <form className='Cart_container' key = {index}>
-                        
+                        <img className='Cart_image' src='https://st4.depositphotos.com/14009552/38450/v/450/depositphotos_384500344-stock-illustration-shopping-cart-logo-design-letter.jpg'></img>
                         <div className='Cart_desc'>
                             <div className='Cart_name'>{item.name}</div>
                         </div>
@@ -81,8 +81,7 @@ class Cart extends Component {
                     </form>
                 )}
                 <button className='Cart_checkout' onClick={this.addOrder}>Checkout</button> 
-                <Link to={`/order/${this.props.params.user}`}>Check order</Link>
-                </div>
+                </form>
                
             </div>
         )

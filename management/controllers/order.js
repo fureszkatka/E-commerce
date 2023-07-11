@@ -59,20 +59,26 @@ Orders.sync();
 exports.getOrder = async(req,res)=>{
 
     const order = await Orders.findAll({where:{
-        userId: req.param("user")
+        userId: req.param("user"),
+        isOrdered: false
     }})
     res.send(order)
 }
 
 exports.checkout = async(req,res)=>{
 
-    for(i=0;req.body.order.length;i++){
-        const checkout = await Orders.update(
+    console.log(req.body.order[0].id)
 
+    for(i=0;i < req.body.order.length; i++){
+        console.log(req.body.order[i].id)
+        const Checkout = await Orders.update(
             {isOrdered: true},
             {where:{
-                id: req.body.order.id
+                userid: req.param("user"),
+                id: req.body.order[i].id
             }}
         )
     }
+    
+
 }
